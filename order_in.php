@@ -37,53 +37,74 @@ function getAndCacheJSONFiles($orderid)
 
 function writeOrderInformation($orderData)
 {
-    $customer_email = "";
-    $customer_user_id = "";
+    $customer_email = $orderData->order->email;
+    $customer_user_id = ""; //todo
 
-    $order_id = "";
-    $order_subtotal_price = "";
-    $order_tax_total = "";
-    $order_total_price = "";
-    $order_total_value = "";
-    $order_token = "";
-    $order_shipping_total = "";
-    $order_placed_at = "";
-    $order_ip_address = "";
-    $order_ip_address = "";
-    $order_placed_at = "";
+    $order_id = $orderData->order->_id;
+    $order_ip_address = $orderData->order->ip_address;
+    $order_placed_at = date("Y-m-d H:i:s", strtotime($orderData->order->placed_at));
 
-    $address_bill_id = "";
-    $address_bill_city = "";
-    $address_bill_company = "";
-    $address_bill_country = "";
-    $address_bill_first_name = "";
-    $address_bill_last_name = "";
-    $address_bill_phone_extension = "";
-    $address_bill_phone_number = "";
-    $address_bill_postal_code = "";
-    $address_bill_region = "";
-    $address_bill_street = "";
-    $address_bill_street_2 = "";
+    $order_subtotal_price = $orderData->order->subtotal_price->cents / 100;
+    $order_tax_total = $orderData->order->tax_total->cents / 100;
+    $order_total_price = $orderData->order->total_price->cents / 100;
+    $order_token = ""; //$orderData->payment->credit_card->token IF IT EXISTS
+    $order_shipping_total = $orderData->order->shipping_total->cents / 100;
 
-    $address_ship_id = "";
-    $address_ship_city = "";
-    $address_ship_company = "";
-    $address_ship_country = "";
-    $address_ship_first_name = "";
-    $address_ship_last_name = "";
-    $address_ship_phone_extension = "";
-    $address_ship_phone_number = "";
-    $address_ship_postal_code = "";
-    $address_ship_region = "";
-    $address_ship_street = "";
-    $address_ship_street_2 = "";
+    $address_bill_id = $orderData->payment->address->_id;
+    $address_bill_city = $orderData->payment->address->city;
+    $address_bill_company = $orderData->payment->address->company;
+    $address_bill_country = $orderData->payment->address->country;
+    $address_bill_first_name = $orderData->payment->address->first_name;
+    $address_bill_last_name = $orderData->payment->address->last_name;
+    $address_bill_phone_extension = $orderData->payment->address->phone_extension;
+    $address_bill_phone_number = $orderData->payment->address->phone_number;
+    $address_bill_postal_code = $orderData->payment->address->postal_code;
+    $address_bill_region = $orderData->payment->address->region;
+    $address_bill_street = $orderData->payment->address->street;
+    $address_bill_street_2 = $orderData->payment->address->street_2;
 
-    //loop
-    $item_amount = "";
-    $item_tax_code = "";
-    $item_quantity = "";
-    $item_sku = "";
-    $item_total_price = "";
+    $address_ship_id = $orderData->shippings[0]->address->_id;
+    $address_ship_city = $orderData->shippings[0]->address->city;
+    $address_ship_company = $orderData->shippings[0]->address->company;
+    $address_ship_country = $orderData->shippings[0]->address->country;
+    $address_ship_first_name = $orderData->shippings[0]->address->first_name;
+    $address_ship_last_name = $orderData->shippings[0]->address->last_name;
+    $address_ship_phone_extension = $orderData->shippings[0]->address->phone_extension;
+    $address_ship_phone_number = $orderData->shippings[0]->address->phone_number;
+    $address_ship_postal_code = $orderData->shippings[0]->address->postal_code;
+    $address_ship_region = $orderData->shippings[0]->address->region;
+    $address_ship_street = $orderData->shippings[0]->address->street;
+    $address_ship_street_2 = $orderData->shippings[0]->address->street_2;
+
+    $columnNames = array("customer_email", "customer_user_id", "order_id", "order_ip_address", "order_placed_at", "order_subtotal_price", "order_tax_total",
+                    "order_total_price", "order_token", "order_shipping_total", "address_bill_id", "address_bill_city", "address_bill_company", "address_bill_country",
+                    "address_bill_first_name", "address_bill_last_name", "address_bill_phone_extension", "address_bill_phone_number", "address_bill_postal_code",
+                    "address_bill_region", "address_bill_street", "address_bill_street_2", "address_ship_id", "address_ship_city", "address_ship_company", 
+                    "address_ship_country", "address_ship_first_name", "address_ship_last_name", "address_ship_phone_extension", "address_ship_phone_number", 
+                    "address_ship_postal_code", "address_ship_region", "address_ship_street", "address_ship_street_2");
+    $rowValues = array($customer_email, $customer_user_id, $order_id, $order_ip_address, $order_placed_at, (string)$order_subtotal_price, (string)$order_tax_total,
+                    (string)$order_total_price, $order_token, (string)$order_shipping_total, $address_bill_id, $address_bill_city, $address_bill_company, $address_bill_country,
+                    $address_bill_first_name, $address_bill_last_name, $address_bill_phone_extension, $address_bill_phone_number, $address_bill_postal_code,
+                    $address_bill_region, $address_bill_street, $address_bill_street_2, $address_ship_id, $address_ship_city, $address_ship_company,
+                    $address_ship_country, $address_ship_first_name, $address_ship_last_name, $address_ship_phone_extension, $address_ship_phone_number,
+                    $address_ship_postal_code, $address_ship_region, $address_ship_street, $address_ship_street_2);
+    $tableName = "workarea.order_log";
+    generateSqlQueryForInsert($columnNames, $rowValues, $tableName);
+
+    foreach($orderData->order->items as $item)
+    {
+        $id = $item->_id;
+        $item_sku = $item->sku;
+        $item_amount = $item->price_adjustments[0]->data->original_price;
+        $item_tax_code = $item->price_adjustments[0]->data->tax_code;
+        $item_quantity = $item->quantity;
+        $item_total_price = $item->total_price->cents / 100;
+
+        $columnNames = array("order_id", "sku", "amount", "taxcode", "quantity", "total_price");
+        $rowValues = array($order_id, $item_sku, (string)$item_amount, $item_tax_code, (string)$item_quantity, (string)$item_total_price);
+        $tableName = "workarea.order_log_item";
+        generateSqlQueryForInsert($columnNames, $rowValues, $tableName);
+    }
 }
 
 function callWorkAreaAPI($url, $returnFullJson = false)
