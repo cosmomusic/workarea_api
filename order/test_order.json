@@ -1,0 +1,102 @@
+[
+  {
+    "User-Agent": "Workarea",
+    "Content-Type": "application/json",
+    "X-Workarea-Event": "order/place",
+    "X-Workarea-Resource": "Z2lkOi8vY29zbW8tbXVzaWMvV29ya2FyZWE6Ok9yZGVyL0ZCRjFCN0I0NTA"
+  },
+  {
+    "_type": "Workarea::Order",
+    "_id": "FBF1B7B450",
+    "account_id": null,
+    "canceled_at": null,
+    "checkout_started_at": "2020-06-08 15:30:16 UTC",
+    "copied_from_id": null,
+    "created_at": "2020-06-08 15:29:08 UTC",
+    "discount_ids": [
+
+    ],
+    "email": "ld@syatt.io",
+    "fraud_decided_at": "2020-06-08 15:30:16 UTC",
+    "fraud_decision": {
+      "_id": "5ede598887684d0018914062",
+      "analyzer": "Workarea::Checkout::Fraud::NoDecisionAnalyzer",
+      "created_at": null,
+      "decision": "no_decision",
+      "message": "Workarea default fraud check. Automatic no decision.",
+      "response": null,
+      "updated_at": null
+    },
+    "fraud_suspected_at": null,
+    "ip_address": "99.230.249.13",
+    "items": [
+      {
+        "_id": "5ede594436abb600188e51bb",
+        "category_ids": [
+          "rental_prototype",
+          "5e39a5508baf5002a850a276",
+          "5e39a5508baf5002a850a284",
+          "5e39a5508baf5002a850a278",
+          "5e39a5508baf5002a850a28e",
+          "5e668bf51eb5b17b27b093c0",
+          "5e39a5508baf5002a850a28a",
+          "5e39a5508baf5002a850a288"
+        ],
+        "created_at": "2020-06-08 15:29:08 UTC",
+        "customizations": {
+        },
+        "discountable": true,
+        "free_gift": false,
+        "fulfillment": "rental",
+        "new_rental_contract": false,
+        "product_id": "RENTAL_PRODUCT_1",
+        "quantity": 1,
+        "quote_sort_order": 1,
+        "rental_contract_id": null,
+        "sku": "RENTAL_SKU_1_school_year_new_true",
+        "subscription_frequency": null,
+        "total_price": {"cents":100.0,"currency_iso":"CAD"},
+        "total_value": {"cents":100.0,"currency_iso":"CAD"},
+        "updated_at": "2020-06-08 15:29:08 UTC",
+        "via": null
+      }
+    ],
+    "metrics_saved_at": "2020-06-08 15:30:18 UTC",
+    "placed_at": "2020-06-08 15:30:17 UTC",
+    "promo_codes": [
+
+    ],
+    "quoted": false,
+    "reminded_at": null,
+    "rental_contract_id": "5ede55b087684d0018914017",
+    "review_notes": null,
+    "reviewed_at": null,
+    "reviewed_by_id": null,
+    "segment_ids": [
+      "first_time_visitor"
+    ],
+    "shipping_total": {"cents":0.0,"currency_iso":"CAD"},
+    "source": "storefront",
+    "subscription_recurrence_id": null,
+    "subtotal_price": {"cents":100.0,"currency_iso":"CAD"},
+    "tax_total": {"cents":0.0,"currency_iso":"CAD"},
+    "token": "yNj344SYQi1Qm2xqBJmYzoeF",
+    "total_price": {"cents":100.0,"currency_iso":"CAD"},
+    "total_value": {"cents":100.0,"currency_iso":"CAD"},
+    "traffic_referrer": {
+      "_id": "5ede598887684d0018914050",
+      "created_at": null,
+      "domain": null,
+      "known": false,
+      "medium": null,
+      "source": null,
+      "term": null,
+      "updated_at": null,
+      "uri": "https://www.staging.cosmomusic.weblinc.com/checkout/place_order"
+    },
+    "updated_at": "2020-06-08 15:30:17 UTC",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
+    "user_id": "5ed12c843ac2eb001a86333d"
+  }
+]
+
